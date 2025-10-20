@@ -214,7 +214,7 @@ if not processar:
         2. **Faça upload dos arquivos**:
            - Exames Básicos (obrigatório)
            - Resultados 2 (opcional)
-           - Pacientes do TASY (obrigatório)
+           - Pacientes do TASY  Coluna 1 PACIENTE, Coluna 2 ATENDIMENTO  (obrigatório)
         3. **Clique em Processar**
         4. **Baixe o arquivo** gerado
         
@@ -416,3 +416,4 @@ else:
             st.error(f"❌ Erro ao processar: {str(e)}")
 
             st.exception(e)
+
