@@ -90,7 +90,7 @@ MAPA_RESULTADOS2 = {
     'FER': 'NR_EXAME_36567', 'CTT': 'NR_EXAME_36582',
     'IST': 'NR_EXAME_36520', 'VITD25OH': 'NR_EXAME_36457',
     'PTH_DB': 'NR_EXAME_36502', 'AAU': 'NR_EXAME_36578',
-    'ANTI_HBS': 'NR_EXAME_36456', 'HCV': 'NR_EXAME_36574'
+    'ANTI_HBS': 'NR_EXAME_36456', 'HCV': 'NR_EXAME_36574', 'ALU_SER': 'NR_EXAME_36448'
 }
 
 ORDEM_COLUNAS_TASY = [
@@ -414,4 +414,5 @@ else:
             
         except Exception as e:
             st.error(f"❌ Erro ao processar: {str(e)}")
+
             st.exception(e)
