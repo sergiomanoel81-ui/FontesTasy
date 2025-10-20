@@ -1,7 +1,6 @@
 streamlit==1.40.2
 pandas==2.2.3
 openpyxl==3.1.5
-xlrd==2.0.1
 ```
 
 Salve e faça upload junto com o `app_tasy.py`
@@ -89,4 +88,5 @@ A URL funciona em:
 1. GitHub → New repository (gerador-tasy)
 2. Upload: app_tasy.py + requirements.txt
 3. Streamlit.io → New app → Deploy
+
 4. Copiar URL e compartilhar
