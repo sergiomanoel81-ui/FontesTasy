@@ -11,39 +11,254 @@
   },
   
   "exames": [
-    {"codigo_tasy": "36486", "nome": "Hemoglobina (Hb)", "colunas_lab": ["C_Hb", "hb ", "hb"], "categoria": "basico"},
-    {"codigo_tasy": "36485", "nome": "Hematócrito (Ht)", "colunas_lab": ["C_Ht", "ht ", "ht"], "categoria": "basico"},
-    {"codigo_tasy": "36452", "nome": "Uréia Pré", "colunas_lab": ["UREI"], "categoria": "basico"},
-    {"codigo_tasy": "36581", "nome": "Uréia Pós-Diálise", "colunas_lab": ["UPD"], "categoria": "basico"},
-    {"codigo_tasy": "36434", "nome": "Creatinina", "colunas_lab": ["CREA", "crea ", "crea"], "categoria": "basico"},
-    {"codigo_tasy": "36433", "nome": "Cálcio", "colunas_lab": ["CALCIO", "cálcio"], "categoria": "basico"},
-    {"codigo_tasy": "36435", "nome": "Fósforo", "colunas_lab": ["FOSFS"], "categoria": "basico"},
-    {"codigo_tasy": "36461", "nome": "Sódio", "colunas_lab": ["Na"], "categoria": "basico"},
-    {"codigo_tasy": "36436", "nome": "Potássio (K)", "colunas_lab": ["POTAS"], "categoria": "basico"},
-    {"codigo_tasy": "36437", "nome": "TGP (ALT)", "colunas_lab": ["TGP"], "categoria": "basico"},
-    {"codigo_tasy": "36438", "nome": "Glicose", "colunas_lab": ["GLIC"], "categoria": "basico"},
-    {"codigo_tasy": "36447", "nome": "Colesterol Total", "colunas_lab": ["CTOT"], "categoria": "resultados2"},
-    {"codigo_tasy": "36579", "nome": "HDL Colesterol", "colunas_lab": ["HDL"], "categoria": "resultados2"},
-    {"codigo_tasy": "36580", "nome": "LDL Colesterol", "colunas_lab": ["Col_LDL"], "categoria": "resultados2"},
-    {"codigo_tasy": "36449", "nome": "Triglicerídeos", "colunas_lab": ["TRIG"], "categoria": "resultados2"},
-    {"codigo_tasy": "36483", "nome": "Plaquetas", "colunas_lab": ["PLAQ"], "categoria": "resultados2"},
-    {"codigo_tasy": "36522", "nome": "Fosfatase Alcalina", "colunas_lab": ["FA"], "categoria": "resultados2"},
-    {"codigo_tasy": "36523", "nome": "Proteínas Totais", "colunas_lab": ["PT"], "categoria": "resultados2"},
-    {"codigo_tasy": "36584", "nome": "Albumina", "colunas_lab": ["ALB"], "categoria": "resultados2"},
-    {"codigo_tasy": "36585", "nome": "Globulinas", "colunas_lab": ["GLB"], "categoria": "resultados2"},
-    {"codigo_tasy": "36587", "nome": "Relação Albumina/Globulina", "colunas_lab": ["Rel_Alb_Gl"], "categoria": "resultados2"},
-    {"codigo_tasy": "36453", "nome": "Hemoglobina Glicada (HbA1c)", "colunas_lab": ["Hb_A1c"], "categoria": "resultados2"},
-    {"codigo_tasy": "36518", "nome": "Ferritina", "colunas_lab": ["Ferritina"], "categoria": "resultados2"},
-    {"codigo_tasy": "36450", "nome": "T4 Total", "colunas_lab": ["T4"], "categoria": "resultados2"},
-    {"codigo_tasy": "36455", "nome": "TSH", "colunas_lab": ["TSH"], "categoria": "resultados2"},
-    {"codigo_tasy": "36567", "nome": "Ferro Sérico", "colunas_lab": ["FER"], "categoria": "resultados2"},
-    {"codigo_tasy": "36582", "nome": "Capacidade Total de Fixação", "colunas_lab": ["CTT"], "categoria": "resultados2"},
-    {"codigo_tasy": "36520", "nome": "Índice Saturação Transferrina", "colunas_lab": ["IST"], "categoria": "resultados2"},
-    {"codigo_tasy": "36457", "nome": "Vitamina D (25-OH)", "colunas_lab": ["VITD25OH"], "categoria": "resultados2"},
-    {"codigo_tasy": "36502", "nome": "PTH (Paratormônio)", "colunas_lab": ["PTH_DB"], "categoria": "resultados2"},
-    {"codigo_tasy": "36578", "nome": "Anticorpo Anti-HBs", "colunas_lab": ["AAU"], "categoria": "resultados2"},
-    {"codigo_tasy": "36456", "nome": "Anti-HBs (Hepatite B)", "colunas_lab": ["ANTI_HBS"], "categoria": "resultados2"},
-    {"codigo_tasy": "36574", "nome": "Anti-HCV (Hepatite C)", "colunas_lab": ["HCV"], "categoria": "resultados2"},
-    {"codigo_tasy": "36448", "nome": "Alumínio Sérico", "colunas_lab": ["ALU_SER"], "categoria": "resultados2"}
+    {
+      "codigo_tasy": "36486",
+      "nome": "Hemoglobina (Hb)",
+      "colunas_lab": ["C_Hb", "hb ", "hb"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36485",
+      "nome": "Hematócrito (Ht)",
+      "colunas_lab": ["C_Ht", "ht ", "ht"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36452",
+      "nome": "Uréia Pré",
+      "colunas_lab": ["UREI"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36581",
+      "nome": "Uréia Pós-Diálise",
+      "colunas_lab": ["UPD"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36434",
+      "nome": "Creatinina",
+      "colunas_lab": ["CREA", "crea ", "crea"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36433",
+      "nome": "Cálcio",
+      "colunas_lab": ["CALCIO", "cálcio"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36435",
+      "nome": "Fósforo",
+      "colunas_lab": ["FOSFS"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36461",
+      "nome": "Sódio",
+      "colunas_lab": ["Na"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36436",
+      "nome": "Potássio (K)",
+      "colunas_lab": ["POTAS"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36437",
+      "nome": "TGP (ALT)",
+      "colunas_lab": ["TGP"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36438",
+      "nome": "Glicose",
+      "colunas_lab": ["GLIC"],
+      "categoria": "basico"
+    },
+    {
+      "codigo_tasy": "36447",
+      "nome": "Colesterol Total",
+      "colunas_lab": ["CTOT"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36579",
+      "nome": "HDL Colesterol",
+      "colunas_lab": ["HDL"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36580",
+      "nome": "LDL Colesterol",
+      "colunas_lab": ["Col_LDL"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36449",
+      "nome": "Triglicerídeos",
+      "colunas_lab": ["TRIG"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36483",
+      "nome": "Plaquetas",
+      "colunas_lab": ["PLAQ"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36522",
+      "nome": "Fosfatase Alcalina",
+      "colunas_lab": ["FA"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36523",
+      "nome": "Proteínas Totais",
+      "colunas_lab": ["PT"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36584",
+      "nome": "Albumina",
+      "colunas_lab": ["ALB"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36585",
+      "nome": "Globulinas",
+      "colunas_lab": ["GLB"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36587",
+      "nome": "Relação Albumina/Globulina",
+      "colunas_lab": ["Rel_Alb_Gl"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36453",
+      "nome": "Hemoglobina Glicada (HbA1c)",
+      "colunas_lab": ["Hb_A1c"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36518",
+      "nome": "Ferritina",
+      "colunas_lab": ["Ferritina"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36450",
+      "nome": "T4 Total",
+      "colunas_lab": ["T4"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36455",
+      "nome": "TSH",
+      "colunas_lab": ["TSH"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36567",
+      "nome": "Ferro Sérico",
+      "colunas_lab": ["FER"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36582",
+      "nome": "Capacidade Total de Fixação",
+      "colunas_lab": ["CTT"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36520",
+      "nome": "Índice Saturação Transferrina",
+      "colunas_lab": ["IST"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36457",
+      "nome": "Vitamina D (25-OH)",
+      "colunas_lab": ["VITD25OH"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36502",
+      "nome": "PTH (Paratormônio)",
+      "colunas_lab": ["PTH_DB"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36578",
+      "nome": "Anticorpo Anti-HBs",
+      "colunas_lab": ["AAU"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36456",
+      "nome": "Anti-HBs (Hepatite B)",
+      "colunas_lab": ["ANTI_HBS"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36574",
+      "nome": "Anti-HCV (Hepatite C)",
+      "colunas_lab": ["HCV"],
+      "categoria": "resultados2"
+    },
+    {
+      "codigo_tasy": "36448",
+      "nome": "Alumínio Sérico",
+      "colunas_lab": ["ALU_SER"],
+      "categoria": "resultados2"
+    }
+  ],
+  
+  "ordem_colunas_tasy": [
+    "NM_PACIENTE",
+    "NR_ATENDIMENTO",
+    "DT_RESULTADO",
+    "DS_PROTOCOLO",
+    "CD_ESTABELECIMENTO",
+    "NR_EXAME_36433",
+    "NR_EXAME_36434",
+    "NR_EXAME_36435",
+    "NR_EXAME_36436",
+    "NR_EXAME_36437",
+    "NR_EXAME_36438",
+    "NR_EXAME_36439",
+    "NR_EXAME_36447",
+    "NR_EXAME_36448",
+    "NR_EXAME_36449",
+    "NR_EXAME_36450",
+    "NR_EXAME_36452",
+    "NR_EXAME_36453",
+    "NR_EXAME_36455",
+    "NR_EXAME_36456",
+    "NR_EXAME_36457",
+    "NR_EXAME_36461",
+    "NR_EXAME_36483",
+    "NR_EXAME_36485",
+    "NR_EXAME_36486",
+    "NR_EXAME_36501",
+    "NR_EXAME_36502",
+    "NR_EXAME_36518",
+    "NR_EXAME_36520",
+    "NR_EXAME_36522",
+    "NR_EXAME_36523",
+    "NR_EXAME_36567",
+    "NR_EXAME_36574",
+    "NR_EXAME_36578",
+    "NR_EXAME_36579",
+    "NR_EXAME_36580",
+    "NR_EXAME_36581",
+    "NR_EXAME_36582",
+    "NR_EXAME_36584",
+    "NR_EXAME_36585",
+    "NR_EXAME_36587",
+    "NR_EXAME_36588"
   ]
 }
