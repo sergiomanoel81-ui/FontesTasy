@@ -5,6 +5,7 @@ import warnings
 import streamlit as st
 from pathlib import Path
 import io
+import json
 warnings.filterwarnings('ignore')
 
 # ==================== CONFIGURAÇÃO DA PÁGINA ====================
@@ -56,85 +57,59 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ==================== TÍTULO ====================
-st.title("🏥 Gerador de Planilha para TASY")
-st.markdown("---")
+# ==================== CARREGAR CONFIGURAÇÕES ====================
+@st.cache_data
+def carregar_configuracoes():
+    """Carrega configurações do arquivo JSON"""
+    try:
+        with open('config_exames.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        st.error("❌ Arquivo config_exames.json não encontrado!")
+        st.info("📄 Crie o arquivo config_exames.json no mesmo diretório do app_tasy.py")
+        st.stop()
+    except json.JSONDecodeError as e:
+        st.error(f"❌ Erro ao ler config_exames.json: {str(e)}")
+        st.info("Verifique se o JSON está com formato válido")
+        st.stop()
 
-# ==================== CONFIGURAÇÕES ====================
-ESTABELECIMENTOS = {
-    ' MATRIZ': 1, ' MONTE SERRAT': 3, ' CONVENIOS': 4,
-    ' RIO VERMELHO': 5, ' SANTO ESTEVAO': 7,
-    'MATRIZ': 1, 'MONTE SERRAT': 3, 'CONVENIOS': 4,
-    'RIO VERMELHO': 5, 'SANTO ESTEVAO': 7
-}
+# Carregar configurações
+CONFIG = carregar_configuracoes()
+ESTABELECIMENTOS = CONFIG['estabelecimentos']
 
-# Mapeamento completo com nomes dos exames
-MAPA_EXAMES_COMPLETO = {
-    'C_Hb': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
-    'hb ': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
-    'hb': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
-    'C_Ht': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
-    'ht ': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
-    'ht': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
-    'UREI': {'codigo': 'NR_EXAME_36452', 'nome': 'Uréia Pré'},
-    'UPD': {'codigo': 'NR_EXAME_36581', 'nome': 'Uréia Pós-Diálise'},
-    'CREA': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
-    'crea ': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
-    'crea': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
-    'CALCIO': {'codigo': 'NR_EXAME_36433', 'nome': 'Cálcio'},
-    'cálcio': {'codigo': 'NR_EXAME_36433', 'nome': 'Cálcio'},
-    'FOSFS': {'codigo': 'NR_EXAME_36435', 'nome': 'Fósforo'},
-    'Na': {'codigo': 'NR_EXAME_36461', 'nome': 'Sódio'},
-    'POTAS': {'codigo': 'NR_EXAME_36436', 'nome': 'Potássio (K)'},
-    'TGP': {'codigo': 'NR_EXAME_36437', 'nome': 'TGP (ALT)'},
-    'GLIC': {'codigo': 'NR_EXAME_36438', 'nome': 'Glicose'},
-    'CTOT': {'codigo': 'NR_EXAME_36447', 'nome': 'Colesterol Total'},
-    'HDL': {'codigo': 'NR_EXAME_36579', 'nome': 'HDL Colesterol'},
-    'Col_LDL': {'codigo': 'NR_EXAME_36580', 'nome': 'LDL Colesterol'},
-    'TRIG': {'codigo': 'NR_EXAME_36449', 'nome': 'Triglicerídeos'},
-    'PLAQ': {'codigo': 'NR_EXAME_36483', 'nome': 'Plaquetas'},
-    'FA': {'codigo': 'NR_EXAME_36522', 'nome': 'Fosfatase Alcalina'},
-    'PT': {'codigo': 'NR_EXAME_36523', 'nome': 'Proteínas Totais'},
-    'ALB': {'codigo': 'NR_EXAME_36584', 'nome': 'Albumina'},
-    'GLB': {'codigo': 'NR_EXAME_36585', 'nome': 'Globulinas'},
-    'Rel_Alb_Gl': {'codigo': 'NR_EXAME_36587', 'nome': 'Relação Albumina/Globulina'},
-    'Hb_A1c': {'codigo': 'NR_EXAME_36453', 'nome': 'Hemoglobina Glicada (HbA1c)'},
-    'Ferritina': {'codigo': 'NR_EXAME_36518', 'nome': 'Ferritina'},
-    'T4': {'codigo': 'NR_EXAME_36450', 'nome': 'T4 Total'},
-    'TSH': {'codigo': 'NR_EXAME_36455', 'nome': 'TSH'},
-    'FER': {'codigo': 'NR_EXAME_36567', 'nome': 'Ferro Sérico'},
-    'CTT': {'codigo': 'NR_EXAME_36582', 'nome': 'Capacidade Total de Fixação'},
-    'IST': {'codigo': 'NR_EXAME_36520', 'nome': 'Índice Saturação Transferrina'},
-    'VITD25OH': {'codigo': 'NR_EXAME_36457', 'nome': 'Vitamina D (25-OH)'},
-    'PTH_DB': {'codigo': 'NR_EXAME_36502', 'nome': 'PTH (Paratormônio)'},
-    'AAU': {'codigo': 'NR_EXAME_36578', 'nome': 'Anticorpo Anti-HBs'},
-    'ANTI_HBS': {'codigo': 'NR_EXAME_36456', 'nome': 'Anti-HBs (Hepatite B)'},
-    'HCV': {'codigo': 'NR_EXAME_36574', 'nome': 'Anti-HCV (Hepatite C)'},
-    'ALU_SER': {'codigo': 'NR_EXAME_36448', 'nome': 'Alumínio Sérico'}
-}
+# Adicionar variações com espaço para estabelecimentos
+ESTABELECIMENTOS_COMPLETO = {}
+for key, value in ESTABELECIMENTOS.items():
+    ESTABELECIMENTOS_COMPLETO[key] = value
+    ESTABELECIMENTOS_COMPLETO[' ' + key] = value
 
-# Criar mapas simples para processamento
+# Construir mapas de exames
+MAPA_EXAMES_COMPLETO = {}
 MAPA_BASICOS = {}
 MAPA_RESULTADOS2 = {}
 
-for key, value in MAPA_EXAMES_COMPLETO.items():
-    if key in ['C_Hb', 'hb ', 'hb', 'C_Ht', 'ht ', 'ht', 'UREI', 'UPD', 'CREA', 'crea ', 'crea', 
-               'CALCIO', 'cálcio', 'FOSFS', 'Na', 'POTAS', 'TGP', 'GLIC']:
-        MAPA_BASICOS[key] = value['codigo']
-    else:
-        MAPA_RESULTADOS2[key] = value['codigo']
+for exame in CONFIG['exames']:
+    codigo_completo = f"NR_EXAME_{exame['codigo_tasy']}"
+    
+    for coluna in exame['colunas_lab']:
+        MAPA_EXAMES_COMPLETO[coluna] = {
+            'codigo': codigo_completo,
+            'nome': exame['nome']
+        }
+        
+        if exame['categoria'] == 'basico':
+            MAPA_BASICOS[coluna] = codigo_completo
+        else:
+            MAPA_RESULTADOS2[coluna] = codigo_completo
 
-ORDEM_COLUNAS_TASY = [
-    'NM_PACIENTE', 'NR_ATENDIMENTO', 'DT_RESULTADO', 'DS_PROTOCOLO', 'CD_ESTABELECIMENTO',
-    'NR_EXAME_36433', 'NR_EXAME_36434', 'NR_EXAME_36435', 'NR_EXAME_36436', 'NR_EXAME_36437',
-    'NR_EXAME_36438', 'NR_EXAME_36439', 'NR_EXAME_36447', 'NR_EXAME_36448', 'NR_EXAME_36449',
-    'NR_EXAME_36450', 'NR_EXAME_36452', 'NR_EXAME_36453', 'NR_EXAME_36455', 'NR_EXAME_36456',
-    'NR_EXAME_36457', 'NR_EXAME_36461', 'NR_EXAME_36483', 'NR_EXAME_36485', 'NR_EXAME_36486',
-    'NR_EXAME_36501', 'NR_EXAME_36502', 'NR_EXAME_36518', 'NR_EXAME_36520', 'NR_EXAME_36522',
-    'NR_EXAME_36523', 'NR_EXAME_36567', 'NR_EXAME_36574', 'NR_EXAME_36578', 'NR_EXAME_36579',
-    'NR_EXAME_36580', 'NR_EXAME_36581', 'NR_EXAME_36582', 'NR_EXAME_36584', 'NR_EXAME_36585',
-    'NR_EXAME_36587', 'NR_EXAME_36588'
-]
+# Ordem das colunas
+ORDEM_COLUNAS_TASY = CONFIG.get('ordem_colunas_tasy', [
+    'NM_PACIENTE', 'NR_ATENDIMENTO', 'DT_RESULTADO', 'DS_PROTOCOLO', 'CD_ESTABELECIMENTO'
+])
+
+# ==================== TÍTULO ====================
+st.title("🏥 Gerador de Planilha para TASY")
+st.markdown("---")
 
 # ==================== FUNÇÕES ====================
 def normalizar_nome(nome):
@@ -156,7 +131,7 @@ def obter_cd_estabelecimento(setor):
     if pd.isna(setor):
         return None
     setor_upper = str(setor).upper().strip()
-    return ESTABELECIMENTOS.get(setor_upper, ESTABELECIMENTOS.get(' ' + setor_upper))
+    return ESTABELECIMENTOS_COMPLETO.get(setor_upper, ESTABELECIMENTOS_COMPLETO.get(' ' + setor_upper))
 
 def formatar_data(data):
     if pd.isna(data):
@@ -197,6 +172,9 @@ def ler_excel(arquivo):
 # ==================== SIDEBAR ====================
 with st.sidebar:
     st.header("⚙️ Configurações")
+    
+    # Exibir versão da config
+    st.info(f"📋 Config v{CONFIG.get('versao', 'N/A')}\n\n🗓️ Atualizada em: {CONFIG.get('ultima_atualizacao', 'N/A')}")
     
     protocolo = st.selectbox(
         "Protocolo",
@@ -327,17 +305,13 @@ if not processar:
     st.header("🏢 Códigos de Estabelecimento")
     
     df_estabelecimentos = pd.DataFrame([
-        {"Código": 1, "Estabelecimento": "MATRIZ"},
-        {"Código": 3, "Estabelecimento": "MONTE SERRAT"},
-        {"Código": 4, "Estabelecimento": "CONVÊNIOS"},
-        {"Código": 5, "Estabelecimento": "RIO VERMELHO"},
-        {"Código": 7, "Estabelecimento": "SANTO ESTEVÃO"}
+        {"Código": v, "Estabelecimento": k}
+        for k, v in sorted(ESTABELECIMENTOS.items(), key=lambda x: x[1])
     ])
     
     st.dataframe(df_estabelecimentos, use_container_width=True, hide_index=True)
 
 else:
-    # [RESTO DO CÓDIGO DE PROCESSAMENTO PERMANECE IGUAL]
     if not arquivo_basicos or not arquivo_pacientes:
         st.error("❌ Por favor, envie pelo menos os arquivos de Exames Básicos e Pacientes!")
     else:
