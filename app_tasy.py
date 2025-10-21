@@ -68,30 +68,61 @@ ESTABELECIMENTOS = {
     'RIO VERMELHO': 5, 'SANTO ESTEVAO': 7
 }
 
-MAPA_BASICOS = {
-    'C_Hb': 'NR_EXAME_36486', 'hb ': 'NR_EXAME_36486', 'hb': 'NR_EXAME_36486',
-    'C_Ht': 'NR_EXAME_36485', 'ht ': 'NR_EXAME_36485', 'ht': 'NR_EXAME_36485',
-    'UREI': 'NR_EXAME_36452', 'UPD': 'NR_EXAME_36581',
-    'CREA': 'NR_EXAME_36434', 'crea ': 'NR_EXAME_36434', 'crea': 'NR_EXAME_36434',
-    'CALCIO': 'NR_EXAME_36433', 'cálcio': 'NR_EXAME_36433',
-    'FOSFS': 'NR_EXAME_36435', 'Na': 'NR_EXAME_36461',
-    'POTAS': 'NR_EXAME_36436', 'TGP': 'NR_EXAME_36437',
-    'GLIC': 'NR_EXAME_36438'
+# Mapeamento completo com nomes dos exames
+MAPA_EXAMES_COMPLETO = {
+    'C_Hb': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
+    'hb ': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
+    'hb': {'codigo': 'NR_EXAME_36486', 'nome': 'Hemoglobina (Hb)'},
+    'C_Ht': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
+    'ht ': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
+    'ht': {'codigo': 'NR_EXAME_36485', 'nome': 'Hematócrito (Ht)'},
+    'UREI': {'codigo': 'NR_EXAME_36452', 'nome': 'Uréia Pré'},
+    'UPD': {'codigo': 'NR_EXAME_36581', 'nome': 'Uréia Pós-Diálise'},
+    'CREA': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
+    'crea ': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
+    'crea': {'codigo': 'NR_EXAME_36434', 'nome': 'Creatinina'},
+    'CALCIO': {'codigo': 'NR_EXAME_36433', 'nome': 'Cálcio'},
+    'cálcio': {'codigo': 'NR_EXAME_36433', 'nome': 'Cálcio'},
+    'FOSFS': {'codigo': 'NR_EXAME_36435', 'nome': 'Fósforo'},
+    'Na': {'codigo': 'NR_EXAME_36461', 'nome': 'Sódio'},
+    'POTAS': {'codigo': 'NR_EXAME_36436', 'nome': 'Potássio (K)'},
+    'TGP': {'codigo': 'NR_EXAME_36437', 'nome': 'TGP (ALT)'},
+    'GLIC': {'codigo': 'NR_EXAME_36438', 'nome': 'Glicose'},
+    'CTOT': {'codigo': 'NR_EXAME_36447', 'nome': 'Colesterol Total'},
+    'HDL': {'codigo': 'NR_EXAME_36579', 'nome': 'HDL Colesterol'},
+    'Col_LDL': {'codigo': 'NR_EXAME_36580', 'nome': 'LDL Colesterol'},
+    'TRIG': {'codigo': 'NR_EXAME_36449', 'nome': 'Triglicerídeos'},
+    'PLAQ': {'codigo': 'NR_EXAME_36483', 'nome': 'Plaquetas'},
+    'FA': {'codigo': 'NR_EXAME_36522', 'nome': 'Fosfatase Alcalina'},
+    'PT': {'codigo': 'NR_EXAME_36523', 'nome': 'Proteínas Totais'},
+    'ALB': {'codigo': 'NR_EXAME_36584', 'nome': 'Albumina'},
+    'GLB': {'codigo': 'NR_EXAME_36585', 'nome': 'Globulinas'},
+    'Rel_Alb_Gl': {'codigo': 'NR_EXAME_36587', 'nome': 'Relação Albumina/Globulina'},
+    'Hb_A1c': {'codigo': 'NR_EXAME_36453', 'nome': 'Hemoglobina Glicada (HbA1c)'},
+    'Ferritina': {'codigo': 'NR_EXAME_36518', 'nome': 'Ferritina'},
+    'T4': {'codigo': 'NR_EXAME_36450', 'nome': 'T4 Total'},
+    'TSH': {'codigo': 'NR_EXAME_36455', 'nome': 'TSH'},
+    'FER': {'codigo': 'NR_EXAME_36567', 'nome': 'Ferro Sérico'},
+    'CTT': {'codigo': 'NR_EXAME_36582', 'nome': 'Capacidade Total de Fixação'},
+    'IST': {'codigo': 'NR_EXAME_36520', 'nome': 'Índice Saturação Transferrina'},
+    'VITD25OH': {'codigo': 'NR_EXAME_36457', 'nome': 'Vitamina D (25-OH)'},
+    'PTH_DB': {'codigo': 'NR_EXAME_36502', 'nome': 'PTH (Paratormônio)'},
+    'AAU': {'codigo': 'NR_EXAME_36578', 'nome': 'Anticorpo Anti-HBs'},
+    'ANTI_HBS': {'codigo': 'NR_EXAME_36456', 'nome': 'Anti-HBs (Hepatite B)'},
+    'HCV': {'codigo': 'NR_EXAME_36574', 'nome': 'Anti-HCV (Hepatite C)'},
+    'ALU_SER': {'codigo': 'NR_EXAME_36448', 'nome': 'Alumínio Sérico'}
 }
 
-MAPA_RESULTADOS2 = {
-    'CTOT': 'NR_EXAME_36447', 'HDL': 'NR_EXAME_36579',
-    'Col_LDL': 'NR_EXAME_36580', 'TRIG': 'NR_EXAME_36449',
-    'PLAQ': 'NR_EXAME_36483', 'FA': 'NR_EXAME_36522',
-    'PT': 'NR_EXAME_36523', 'ALB': 'NR_EXAME_36584',
-    'GLB': 'NR_EXAME_36585', 'Rel_Alb_Gl': 'NR_EXAME_36587',
-    'Hb_A1c': 'NR_EXAME_36453', 'Ferritina': 'NR_EXAME_36518',
-    'T4': 'NR_EXAME_36450', 'TSH': 'NR_EXAME_36455',
-    'FER': 'NR_EXAME_36567', 'CTT': 'NR_EXAME_36582',
-    'IST': 'NR_EXAME_36520', 'VITD25OH': 'NR_EXAME_36457',
-    'PTH_DB': 'NR_EXAME_36502', 'AAU': 'NR_EXAME_36578',
-    'ANTI_HBS': 'NR_EXAME_36456', 'HCV': 'NR_EXAME_36574', 'ALU_SER': 'NR_EXAME_36448'
-}
+# Criar mapas simples para processamento
+MAPA_BASICOS = {}
+MAPA_RESULTADOS2 = {}
+
+for key, value in MAPA_EXAMES_COMPLETO.items():
+    if key in ['C_Hb', 'hb ', 'hb', 'C_Ht', 'ht ', 'ht', 'UREI', 'UPD', 'CREA', 'crea ', 'crea', 
+               'CALCIO', 'cálcio', 'FOSFS', 'Na', 'POTAS', 'TGP', 'GLIC']:
+        MAPA_BASICOS[key] = value['codigo']
+    else:
+        MAPA_RESULTADOS2[key] = value['codigo']
 
 ORDEM_COLUNAS_TASY = [
     'NM_PACIENTE', 'NR_ATENDIMENTO', 'DT_RESULTADO', 'DS_PROTOCOLO', 'CD_ESTABELECIMENTO',
@@ -205,7 +236,7 @@ if not processar:
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
-        st.image("https://via.placeholder.com/400x200/0066cc/ffffff?text=TASY+Import", use_column_width=True)
+        st.image("https://via.placeholder.com/400x200/0066cc/ffffff?text=TASY+Import", use_container_width=True)
         
         st.markdown("""
         ### 📋 Como usar:
@@ -230,18 +261,90 @@ if not processar:
         - Valida estabelecimentos
         - Gera relatório de inconsistências
         """)
+    
+    # TABELA DE REFERÊNCIA DE EXAMES
+    st.markdown("---")
+    st.header("📊 Tabela de Referência - Mapeamento de Exames")
+    
+    # Criar DataFrame para exibição
+    tabela_referencia = []
+    codigos_unicos = {}
+    
+    for key, value in MAPA_EXAMES_COMPLETO.items():
+        codigo = value['codigo']
+        nome = value['nome']
+        if codigo not in codigos_unicos:
+            codigos_unicos[codigo] = {
+                'codigo': codigo.replace('NR_EXAME_', ''),
+                'nome': nome,
+                'colunas_lab': [key]
+            }
+        else:
+            if key not in codigos_unicos[codigo]['colunas_lab']:
+                codigos_unicos[codigo]['colunas_lab'].append(key)
+    
+    for codigo, info in sorted(codigos_unicos.items()):
+        tabela_referencia.append({
+            'Código TASY': info['codigo'],
+            'Nome do Exame': info['nome'],
+            'Colunas do Lab': ', '.join(info['colunas_lab'])
+        })
+    
+    df_referencia = pd.DataFrame(tabela_referencia)
+    
+    # Adicionar filtro de busca
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        busca = st.text_input("🔍 Buscar exame:", placeholder="Digite o nome ou código...")
+    
+    # Filtrar tabela
+    if busca:
+        mask = (
+            df_referencia['Nome do Exame'].str.contains(busca, case=False, na=False) |
+            df_referencia['Código TASY'].str.contains(busca, case=False, na=False) |
+            df_referencia['Colunas do Lab'].str.contains(busca, case=False, na=False)
+        )
+        df_filtrado = df_referencia[mask]
+    else:
+        df_filtrado = df_referencia
+    
+    # Exibir tabela
+    st.dataframe(
+        df_filtrado,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Código TASY": st.column_config.TextColumn("Código TASY", width="small"),
+            "Nome do Exame": st.column_config.TextColumn("Nome do Exame", width="large"),
+            "Colunas do Lab": st.column_config.TextColumn("Colunas do Laboratório", width="medium")
+        }
+    )
+    
+    st.info(f"📌 Total de exames mapeados: **{len(df_filtrado)}** de **{len(df_referencia)}**")
+    
+    # Tabela de Estabelecimentos
+    st.markdown("---")
+    st.header("🏢 Códigos de Estabelecimento")
+    
+    df_estabelecimentos = pd.DataFrame([
+        {"Código": 1, "Estabelecimento": "MATRIZ"},
+        {"Código": 3, "Estabelecimento": "MONTE SERRAT"},
+        {"Código": 4, "Estabelecimento": "CONVÊNIOS"},
+        {"Código": 5, "Estabelecimento": "RIO VERMELHO"},
+        {"Código": 7, "Estabelecimento": "SANTO ESTEVÃO"}
+    ])
+    
+    st.dataframe(df_estabelecimentos, use_container_width=True, hide_index=True)
 
 else:
-    # Processar arquivos
+    # [RESTO DO CÓDIGO DE PROCESSAMENTO PERMANECE IGUAL]
     if not arquivo_basicos or not arquivo_pacientes:
         st.error("❌ Por favor, envie pelo menos os arquivos de Exames Básicos e Pacientes!")
     else:
         try:
-            # Progress bar
             progress_bar = st.progress(0)
             status_text = st.empty()
             
-            # 1. Carregar arquivos
             status_text.text("📂 Carregando arquivos...")
             progress_bar.progress(10)
             
@@ -263,13 +366,11 @@ else:
             
             progress_bar.progress(30)
             
-            # 2. Criar índice
             status_text.text("🔍 Indexando pacientes...")
             pacientes['nome_normalizado'] = pacientes[col_nome_pac].apply(normalizar_nome)
             indice_pacientes = pacientes.set_index('nome_normalizado')[col_atend_pac].to_dict()
             progress_bar.progress(40)
             
-            # 3. Processar básicos
             status_text.text("⚙️ Processando exames básicos...")
             basicos['nome_normalizado'] = basicos[col_nome_lab].apply(normalizar_nome)
             basicos['CD_ESTABELECIMENTO'] = basicos['setor_solic'].apply(obter_cd_estabelecimento)
@@ -283,7 +384,6 @@ else:
             sem_atendimento_basicos = basicos[basicos['NR_ATENDIMENTO'].isna()]
             progress_bar.progress(60)
             
-            # 4. Processar resultados 2
             if resultados2 is not None:
                 status_text.text("⚙️ Processando resultados 2...")
                 col_nome_r2 = detectar_colunas_nome(resultados2)
@@ -301,7 +401,6 @@ else:
             
             progress_bar.progress(75)
             
-            # 5. Mesclar dados
             status_text.text("🔄 Mesclando dados...")
             colunas_necessarias_basicos = ['nome_original', 'dthr_os', 'nome_normalizado', 
                                             'NR_ATENDIMENTO', 'CD_ESTABELECIMENTO']
@@ -332,7 +431,6 @@ else:
                 else:
                     dados_mesclados['nome_original'] = dados_mesclados['nome_normalizado'].map(nome_map)
             
-            # Criar planilha final
             planilha_final = pd.DataFrame()
             planilha_final['NM_PACIENTE'] = dados_mesclados['nome_original']
             planilha_final['NR_ATENDIMENTO'] = dados_mesclados['NR_ATENDIMENTO']
@@ -356,7 +454,6 @@ else:
             
             progress_bar.progress(90)
             
-            # Salvar em memória
             status_text.text("💾 Gerando arquivo...")
             output = io.BytesIO()
             planilha_final.to_excel(output, index=False, engine='openpyxl')
@@ -365,7 +462,6 @@ else:
             progress_bar.progress(100)
             status_text.text("✅ Concluído!")
             
-            # Resultados
             st.success("✅ Processamento concluído com sucesso!")
             
             col1, col2, col3 = st.columns(3)
@@ -376,7 +472,6 @@ else:
             with col3:
                 st.metric("⚠️ Inconsistências", len(sem_atendimento_basicos) + len(sem_atendimento_r2))
             
-            # Botão de download
             st.download_button(
                 label="⬇️ Baixar Planilha para TASY",
                 data=output,
@@ -384,7 +479,6 @@ else:
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
             
-            # Mostrar inconsistências
             if len(sem_atendimento_basicos) + len(sem_atendimento_r2) > 0:
                 with st.expander("⚠️ Ver pacientes não encontrados"):
                     nomes_sem_atend = set()
@@ -396,7 +490,6 @@ else:
                     for nome in sorted(nomes_sem_atend):
                         st.write(f"- {nome}")
                     
-                    # Download de inconsistências
                     inconsist_output = io.BytesIO()
                     pd.DataFrame({'Paciente': list(nomes_sem_atend)}).to_excel(inconsist_output, index=False)
                     inconsist_output.seek(0)
@@ -408,16 +501,9 @@ else:
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
             
-            # Preview dos dados
             with st.expander("👁️ Visualizar dados processados"):
                 st.dataframe(planilha_final.head(20), use_container_width=True)
             
         except Exception as e:
             st.error(f"❌ Erro ao processar: {str(e)}")
-
             st.exception(e)
-
-
-
-
-
