@@ -77,12 +77,6 @@ def carregar_configuracoes():
 CONFIG = carregar_configuracoes()
 ESTABELECIMENTOS = CONFIG['estabelecimentos']
 
-# Adicionar variações com espaço para estabelecimentos
-ESTABELECIMENTOS_COMPLETO = {}
-for key, value in ESTABELECIMENTOS.items():
-    ESTABELECIMENTOS_COMPLETO[key] = value
-    ESTABELECIMENTOS_COMPLETO[' ' + key] = value
-
 # Construir mapas de exames
 MAPA_EXAMES_COMPLETO = {}
 MAPA_BASICOS = {}
@@ -126,12 +120,6 @@ def converter_valor_numerico(valor):
         return float(valor)
     except:
         return None
-
-def obter_cd_estabelecimento(setor):
-    if pd.isna(setor):
-        return None
-    setor_upper = str(setor).upper().strip()
-    return ESTABELECIMENTOS_COMPLETO.get(setor_upper, ESTABELECIMENTOS_COMPLETO.get(' ' + setor_upper))
 
 def formatar_data(data):
     if pd.isna(data):
@@ -182,6 +170,23 @@ with st.sidebar:
         index=0
     )
     
+    # Seletor de Estabelecimento
+    st.markdown("---")
+    st.subheader("🏢 Estabelecimento")
+    
+    estabelecimentos_opcoes = list(ESTABELECIMENTOS.keys())
+    estabelecimento_selecionado = st.selectbox(
+        "Selecione o estabelecimento:",
+        estabelecimentos_opcoes,
+        index=0,
+        help="Escolha o estabelecimento para todos os registros"
+    )
+    
+    cd_estabelecimento_fixo = ESTABELECIMENTOS[estabelecimento_selecionado]
+    
+    # Mostrar código selecionado
+    st.info(f"**Código:** {cd_estabelecimento_fixo}")
+    
     st.markdown("---")
     
     st.header("📁 Arquivos")
@@ -220,12 +225,13 @@ if not processar:
         ### 📋 Como usar:
         
         1. **Selecione o protocolo** no menu lateral
-        2. **Faça upload dos arquivos**:
+        2. **Selecione o estabelecimento** no menu lateral
+        3. **Faça upload dos arquivos**:
            - Exames Básicos (obrigatório)
            - Resultados 2 (opcional)
            - Pacientes do TASY (obrigatório)
-        3. **Clique em Processar**
-        4. **Baixe o arquivo** gerado
+        4. **Clique em Processar**
+        5. **Baixe o arquivo** gerado
         
         ---
         
@@ -236,7 +242,7 @@ if not processar:
         ### 🔍 O que o sistema faz:
         - Cruza dados por nome do paciente
         - Mapeia exames para códigos TASY
-        - Valida estabelecimentos
+        - Aplica o estabelecimento selecionado para todos os registros
         - Gera relatório de inconsistências
         """)
     
@@ -347,7 +353,9 @@ else:
             
             status_text.text("⚙️ Processando exames básicos...")
             basicos['nome_normalizado'] = basicos[col_nome_lab].apply(normalizar_nome)
-            basicos['CD_ESTABELECIMENTO'] = basicos['setor_solic'].apply(obter_cd_estabelecimento)
+            
+            # ===== MUDANÇA: Aplicar estabelecimento fixo selecionado pelo usuário =====
+            basicos['CD_ESTABELECIMENTO'] = cd_estabelecimento_fixo
             
             for col_lab, col_tasy in MAPA_BASICOS.items():
                 if col_lab in basicos.columns:
@@ -362,7 +370,9 @@ else:
                 status_text.text("⚙️ Processando resultados 2...")
                 col_nome_r2 = detectar_colunas_nome(resultados2)
                 resultados2['nome_normalizado'] = resultados2[col_nome_r2].apply(normalizar_nome)
-                resultados2['CD_ESTABELECIMENTO'] = resultados2['setor_solic'].apply(obter_cd_estabelecimento)
+                
+                # ===== MUDANÇA: Aplicar estabelecimento fixo selecionado pelo usuário =====
+                resultados2['CD_ESTABELECIMENTO'] = cd_estabelecimento_fixo
                 
                 for col_lab, col_tasy in MAPA_RESULTADOS2.items():
                     if col_lab in resultados2.columns:
@@ -436,7 +446,7 @@ else:
             progress_bar.progress(100)
             status_text.text("✅ Concluído!")
             
-            st.success("✅ Processamento concluído com sucesso!")
+            st.success(f"✅ Processamento concluído com sucesso!\n\n**Estabelecimento aplicado:** {estabelecimento_selecionado} (Código: {cd_estabelecimento_fixo})")
             
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -449,7 +459,7 @@ else:
             st.download_button(
                 label="⬇️ Baixar Planilha para TASY",
                 data=output,
-                file_name=f"Planilha_Importacao_TASY_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
+                file_name=f"Planilha_Importacao_TASY_{estabelecimento_selecionado}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
             
