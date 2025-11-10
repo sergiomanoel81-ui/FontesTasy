@@ -137,9 +137,25 @@ def mapear_exames_para_tasy(df, categoria=None):
     return mapeamento
 
 def normalizar_nome(nome):
+    """
+    Normaliza nome para comparação:
+    - Remove espaços extras
+    - Converte para minúsculas
+    - Remove acentos
+    """
     if pd.isna(nome):
         return ''
-    return str(nome).strip().lower().replace('  ', ' ')
+    
+    import unicodedata
+    
+    # Normalizar texto
+    nome = str(nome).strip().lower().replace('  ', ' ')
+    
+    # Remover acentos
+    nfkd = unicodedata.normalize('NFKD', nome)
+    nome_sem_acento = ''.join([c for c in nfkd if not unicodedata.combining(c)])
+    
+    return nome_sem_acento
 
 def converter_valor_numerico(valor):
     if pd.isna(valor) or valor == '' or valor == ' ':
