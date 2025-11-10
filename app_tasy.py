@@ -78,23 +78,26 @@ CONFIG = carregar_configuracoes()
 ESTABELECIMENTOS = CONFIG['estabelecimentos']
 
 # Construir mapas de exames
+# Estrutura: codigo_tasy -> {'nome': nome, 'colunas_lab': [...], 'categoria': categoria}
 MAPA_EXAMES_COMPLETO = {}
-MAPA_BASICOS = {}
-MAPA_RESULTADOS2 = {}
+MAPA_EXAMES_POR_CODIGO = {}
 
 for exame in CONFIG['exames']:
     codigo_completo = f"NR_EXAME_{exame['codigo_tasy']}"
     
+    # Mapa completo para exibição na UI
     for coluna in exame['colunas_lab']:
         MAPA_EXAMES_COMPLETO[coluna] = {
             'codigo': codigo_completo,
             'nome': exame['nome']
         }
-        
-        if exame['categoria'] == 'basico':
-            MAPA_BASICOS[coluna] = codigo_completo
-        else:
-            MAPA_RESULTADOS2[coluna] = codigo_completo
+    
+    # Mapa por código com todas as variações de coluna
+    MAPA_EXAMES_POR_CODIGO[codigo_completo] = {
+        'nome': exame['nome'],
+        'colunas_lab': exame['colunas_lab'],
+        'categoria': exame['categoria']
+    }
 
 # Ordem das colunas
 ORDEM_COLUNAS_TASY = CONFIG.get('ordem_colunas_tasy', [
@@ -106,6 +109,33 @@ st.title("🏥 Gerador de Planilha para TASY")
 st.markdown("---")
 
 # ==================== FUNÇÕES ====================
+def mapear_exames_para_tasy(df, categoria=None):
+    """
+    Mapeia colunas do DataFrame para códigos TASY.
+    Testa todas as variações de nomenclatura até encontrar uma que existe.
+    
+    Args:
+        df: DataFrame com os dados do laboratório
+        categoria: 'basico' ou 'resultados2' (None = todos)
+    
+    Returns:
+        dict: {codigo_tasy: nome_coluna_encontrada}
+    """
+    mapeamento = {}
+    
+    for codigo_tasy, info in MAPA_EXAMES_POR_CODIGO.items():
+        # Filtrar por categoria se especificado
+        if categoria and info['categoria'] != categoria:
+            continue
+        
+        # Testar cada variação de coluna até encontrar uma que existe
+        for coluna_variacao in info['colunas_lab']:
+            if coluna_variacao in df.columns:
+                mapeamento[codigo_tasy] = coluna_variacao
+                break  # Encontrou, não precisa testar as outras variações
+    
+    return mapeamento
+
 def normalizar_nome(nome):
     if pd.isna(nome):
         return ''
@@ -357,9 +387,11 @@ else:
             # ===== MUDANÇA: Aplicar estabelecimento fixo selecionado pelo usuário =====
             basicos['CD_ESTABELECIMENTO'] = cd_estabelecimento_fixo
             
-            for col_lab, col_tasy in MAPA_BASICOS.items():
-                if col_lab in basicos.columns:
-                    basicos[col_tasy] = basicos[col_lab].apply(converter_valor_numerico)
+            # ===== NOVO: Mapear colunas usando a função que testa todas as variações =====
+            mapa_basicos = mapear_exames_para_tasy(basicos, categoria='basico')
+            
+            for col_tasy, col_lab in mapa_basicos.items():
+                basicos[col_tasy] = basicos[col_lab].apply(converter_valor_numerico)
             
             basicos['NR_ATENDIMENTO'] = basicos['nome_normalizado'].map(indice_pacientes)
             basicos['nome_original'] = basicos[col_nome_lab]
@@ -374,9 +406,11 @@ else:
                 # ===== MUDANÇA: Aplicar estabelecimento fixo selecionado pelo usuário =====
                 resultados2['CD_ESTABELECIMENTO'] = cd_estabelecimento_fixo
                 
-                for col_lab, col_tasy in MAPA_RESULTADOS2.items():
-                    if col_lab in resultados2.columns:
-                        resultados2[col_tasy] = resultados2[col_lab].apply(converter_valor_numerico)
+                # ===== NOVO: Mapear colunas usando a função que testa todas as variações =====
+                mapa_resultados2 = mapear_exames_para_tasy(resultados2, categoria='resultados2')
+                
+                for col_tasy, col_lab in mapa_resultados2.items():
+                    resultados2[col_tasy] = resultados2[col_lab].apply(converter_valor_numerico)
                 
                 resultados2['NR_ATENDIMENTO'] = resultados2['nome_normalizado'].map(indice_pacientes)
                 sem_atendimento_r2 = resultados2[resultados2['NR_ATENDIMENTO'].isna()]
@@ -388,12 +422,12 @@ else:
             status_text.text("🔄 Mesclando dados...")
             colunas_necessarias_basicos = ['nome_original', 'dthr_os', 'nome_normalizado', 
                                             'NR_ATENDIMENTO', 'CD_ESTABELECIMENTO']
-            colunas_necessarias_basicos.extend([col for col in MAPA_BASICOS.values() if col in basicos.columns])
+            colunas_necessarias_basicos.extend([col for col in mapa_basicos.keys() if col in basicos.columns])
             basicos_sel = basicos[colunas_necessarias_basicos]
             
             if resultados2 is not None:
                 colunas_necessarias_r2 = ['nome_normalizado', 'dthr_os']
-                colunas_necessarias_r2.extend([col for col in MAPA_RESULTADOS2.values() if col in resultados2.columns])
+                colunas_necessarias_r2.extend([col for col in mapa_resultados2.keys() if col in resultados2.columns])
                 resultados2_sel = resultados2[colunas_necessarias_r2]
                 
                 dados_mesclados = pd.merge(
